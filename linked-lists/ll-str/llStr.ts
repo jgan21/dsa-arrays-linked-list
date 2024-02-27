@@ -148,6 +148,25 @@ class LLStr {
    **/
 
   setAt(idx: number, val: string): void {
+
+    if (idx >= this.length || idx < 0) throw new IndexError;
+
+    let counter = 0;
+    let currNode = this.head;
+
+    if (idx === 0) {
+      this.head!.val = val;
+      return;
+    }
+
+    while (counter <= this.length){
+        if (counter === idx) {
+          currNode!.val = val;
+          return;
+        }
+        counter += 1;
+        currNode = currNode!.next;
+    }
   }
 
   /** insertAt(idx, val): add node w/val before idx.
