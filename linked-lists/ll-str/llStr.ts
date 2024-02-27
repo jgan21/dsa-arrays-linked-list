@@ -80,26 +80,24 @@ class LLStr {
   pop(): string {
 
     if (this.length === 0) throw new IndexError;
-
-    if (this.length === 1) {
-      const returnValue = this.head!.val;
-      this.head = null;
-      this.tail = null;
-      this.length = 0;
-      return returnValue;
-    }
+    const returnValue = this.tail?.val;
 
     let currNode = this.head;
-    let counter = 1;
-    while (counter < this.length - 1 && currNode!.next !== null) {
-      counter += 1
-      currNode = currNode!.next;
+
+    if (this.length === 1) {
+      this.head = null;
+      this.tail = null;
+    } else {
+      let counter = 1;
+      while (counter < this.length - 1 && currNode!.next !== null) {
+        counter += 1
+        currNode = currNode!.next;
+      }
     }
 
-    const returnValue = this.tail?.val;
-    this.tail = currNode;
-    currNode!.next = null;
     this.length -= 1;
+    this.tail = this.length === 0 ? null : currNode!;
+    currNode!.next = null;
     return returnValue!;
   }
 
@@ -109,7 +107,19 @@ class LLStr {
    **/
 
   shift(): string {
-    return "x";
+
+    if (this.length === 0) throw new IndexError;
+
+    const returnValue = this.head!.val;
+    if (this.length === 1) {
+      this.head = null;
+      this.tail = null;
+    } else {
+      this.head = this.head!.next;
+    }
+    this.length -= 1;
+    return returnValue;
+
   }
 
   /** getAt(idx): get val at idx.
