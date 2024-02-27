@@ -80,16 +80,27 @@ class LLStr {
   pop(): string {
 
     if (this.length === 0) throw new IndexError;
-      //redefine the tail
-      //the new tail's next would be set to null
-    let currVal = this.head;
-    const currTail = this.tail;
-    while (currVal!.next === null){
-      this.tail = currVal;
-      currVal!.next = null;
-      }
+
+    if (this.length === 1) {
+      const returnValue = this.head!.val;
+      this.head = null;
+      this.tail = null;
+      this.length = 0;
+      return returnValue;
+    }
+
+    let currNode = this.head;
+    let counter = 1;
+    while (counter < this.length - 1 && currNode!.next !== null) {
+      counter += 1
+      currNode = currNode!.next;
+    }
+
+    const returnValue = this.tail?.val;
+    this.tail = currNode;
+    currNode!.next = null;
     this.length -= 1;
-    return currTail!.val;
+    return returnValue!;
   }
 
   /** shift(): return & remove first item.
