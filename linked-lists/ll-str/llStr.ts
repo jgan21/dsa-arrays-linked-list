@@ -128,7 +128,18 @@ class LLStr {
    **/
 
   getAt(idx: number): string {
-    return "x";
+    let counter = 0;
+    let currNode = this.head;
+    if (idx >= this.length || idx < 0) throw new IndexError;
+
+    while (counter <= this.length){
+        if (counter === idx) {
+          return currNode!.val;
+        }
+        counter += 1;
+        currNode = currNode!.next;
+    }
+    return currNode!.val;
   }
 
   /** setAt(idx, val): set val at idx to val.
