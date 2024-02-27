@@ -175,6 +175,43 @@ class LLStr {
    **/
 
   insertAt(idx: number, val: string): void {
+    if (idx > this.length || idx < 0) throw new IndexError;
+
+    const newNode = new NodeStr(val);
+
+    let counter = 0;
+    let currNode = this.head;
+
+    // at idx 0 -> update head to be newNode
+    //newNode's next = oldhead
+
+    if (idx === 0){
+      if (this.length === 0) this.tail = newNode;
+      const oldHead = this.head;
+      this.head = newNode;
+      newNode.next = oldHead;
+      this.length += 1;
+      return;
+    }
+
+    if (idx === this.length){
+      const currTail = this.tail;
+      currTail!.next = newNode;
+      this.tail = newNode;
+      this.length += 1;
+      return;
+    }
+
+    while (counter <= this.length){
+      if (counter === idx - 1){
+        newNode.next = currNode!.next;
+        currNode!.next = newNode;
+        this.length += 1;
+        return;
+      }
+      counter += 1;
+      currNode = currNode!.next;
+    }
   }
 
   /** removeAt(idx): return & remove item at idx,
