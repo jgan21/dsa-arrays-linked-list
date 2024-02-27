@@ -220,7 +220,37 @@ class LLStr {
    **/
 
   removeAt(idx: number): string {
-    return "x";
+    if (idx > this.length || idx < 0) throw new IndexError;
+
+    let counter = 0;
+    let currNode = this.head;
+
+    if (idx === 0 && this.length === 1) {
+      const returnValue = this.head!.val;
+      this.head = null;
+      this.tail = null;
+      this.length = 0;
+      return returnValue;
+    }
+
+    if (idx === 0) {
+      const returnValue = this.head!.val;
+      this.head = this.head!.next;
+      this.length -= 1;
+      return returnValue;
+    }
+
+    while (counter <= this.length){
+      if (counter === idx - 1){
+        const returnValue = currNode!.next!.val;
+        currNode!.next = currNode!.next!.next;
+        console.log("currNode: ", currNode);
+        this.length -= 1;
+        return returnValue;
+      }
+      counter += 1;
+      currNode = currNode!.next;
+    }
   }
 
   /** toArray (useful for tests!) */
